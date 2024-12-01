@@ -1,4 +1,4 @@
-import std/nre, std/strutils, std/algorithm, std/strformat, std/tables
+import std/re, std/strutils, std/algorithm, std/strformat, std/tables
 
 const testdata = """3   4
 4   3
