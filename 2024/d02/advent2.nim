@@ -19,15 +19,12 @@ let testdata = """7 6 4 2 1
 let realdata = readFile("input.txt").to_matrix
 
 proc line_safe(line: seq[int]): bool =
-    var diffs: seq[int] = @[]
+    var allPos, allNeg = true
     for i in 1..<line.len:
-        diffs.add(line[i] - line[i-1])
-    var allPos = true
-    var allNeg = true
-    for i in diffs:
-        if (abs(i) < 1 or abs(i) > 3): return false
-        if (i >= 0): allNeg = false
-        if (i < 0): allPos = false
+        var diff = line[i] - line[i-1]
+        if (abs(diff) < 1 or abs(diff) > 3): return false
+        if (diff >= 0): allNeg = false
+        if (diff < 0): allPos = false
 
     return allPos or allNeg
 
