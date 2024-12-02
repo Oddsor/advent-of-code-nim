@@ -1,4 +1,4 @@
-import std/re, strutils, sugar, sequtils, strformat
+import std/re, strutils, sequtils, strformat
 
 let newline = re"\n"
 let whitespace = re"\s+"
@@ -16,6 +16,7 @@ let testdata = """7 6 4 2 1
 1 3 2 4 5
 8 6 4 4 1
 1 3 6 7 9""".to_matrix
+let realdata = readFile("input.txt").to_matrix
 
 proc line_safe(line: seq[int]): bool =
     var diffs: seq[int] = @[]
@@ -30,12 +31,17 @@ proc line_safe(line: seq[int]): bool =
 
     return allPos or allNeg
 
-let realdata = readFile("input.txt").to_matrix
+proc line_safeish(line: seq[int]): bool =
+    for x in 0..<line.len:
+        var nline = line
+        nline.delete(x)
+        if (line_safe(nline)): return true
+    return false
 
 echo fmt"""
-Test 1: {testdata.filterIt(line_safe(it)).len}
-Real 1: {realdata.filterIt(line_safe(it)).len}
+Test 1: {testdata.countIt(line_safe(it))}
+Real 1: {realdata.countIt(line_safe(it))}
 
-Test 2: TODO
-Real 2: TODO
+Test 2: {testdata.countIt(line_safeish(it))}
+Real 2: {realdata.countIt(line_safeish(it))}
 """
