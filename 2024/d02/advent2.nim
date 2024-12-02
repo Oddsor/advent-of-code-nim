@@ -1,12 +1,9 @@
-import std/re, strutils, sequtils, strformat
-
-let newline = re"\n"
-let whitespace = re"\s+"
+import strutils, sequtils, strformat
 
 proc to_matrix(input: string): seq[seq[int]] =
-    for line in input.split(newline):
+    for line in input.splitLines:
         var lineseq: seq[int] = @[]
-        for x in line.split(whitespace):
+        for x in line.splitWhitespace:
             lineseq.add(x.parseInt)
         result.add(lineseq)
 
