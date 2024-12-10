@@ -22,8 +22,8 @@ func solve_equation(solution: int, value: int, values: seq[int]): bool =
     else:
         var nvalues = values
         nvalues.delete(0)
-        @[solve_equation(solution, value + values[0], nvalues),
-        solve_equation(solution, value * values[0], nvalues)].anyIt(it == true)
+        if solve_equation(solution, value + values[0], nvalues): true
+        else: solve_equation(solution, value * values[0], nvalues)
 
 func concat_number(val1: int, val2: int): int =
     var val1str = val1.intToStr
@@ -37,9 +37,9 @@ func solve_equation2(solution: int, value: int, values: seq[int]): bool =
     else:
         var nvalues = values
         nvalues.delete(0)
-        @[solve_equation2(solution, value + values[0], nvalues),
-        solve_equation2(solution, value * values[0], nvalues),
-        solve_equation2(solution, value.concat_number(values[0]), nvalues)].anyIt(it == true)
+        if solve_equation2(solution, value + values[0], nvalues): true
+        elif solve_equation2(solution, value * values[0], nvalues): true
+        else: solve_equation2(solution, value.concat_number(values[0]), nvalues)
 
 proc calculate(equation_fn: (int, int, seq[int]) -> bool, input: string): int =
     for x in input.splitLines:
