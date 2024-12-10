@@ -16,7 +16,7 @@ proc numbers(line: string): seq[int] =
     for x in line.findAll(num_match):
         result.add(x.parseInt)
 
-proc solve_equation(solution: int, value: int, values: seq[int]): bool = 
+func solve_equation(solution: int, value: int, values: seq[int]): bool = 
     if (value > solution): false
     elif (values.len == 0): solution == value
     else:
@@ -31,7 +31,7 @@ func concat_number(val1: int, val2: int): int =
     val1str.add(val2str)
     val1str.parseInt
 
-proc solve_equation2(solution: int, value: int, values: seq[int]): bool = 
+func solve_equation2(solution: int, value: int, values: seq[int]): bool = 
     if (value > solution): false
     elif (values.len == 0): solution == value
     else:
@@ -44,7 +44,7 @@ proc solve_equation2(solution: int, value: int, values: seq[int]): bool =
 proc calculate(equation_fn: (int, int, seq[int]) -> bool, input: string): int =
     for x in input.splitLines:
         let nums = numbers(x)
-        if (solve_equation2(nums[0], nums[1], nums[2..<nums.len])):
+        if (equation_fn(nums[0], nums[1], nums[2..<nums.len])):
             result += nums[0]
 
 echo fmt"""
